@@ -21,4 +21,10 @@ The bootloader is linked at `0x08000000` with a 48 KiB limit. The application is
 - `platformio.ini`: shared target settings and per-firmware source filters, memory limits, and load addresses.
 - `scripts/fpu-link.py`: STM32F411 Cortex-M4F hard-float linker setup.
 
-Both environments have been build-verified. Hardware flashing and runtime behavior remain unverified.
+## Bootloader compatibility
+
+Install this project's bootloader via SWD before running the PIO application with its initial stack at `0x20020000`. The original bootloader switches MSP and then executes a C function epilogue that reads beyond SRAM. The fixed `jump_to_app()` switches MSP and immediately branches to the application reset handler without further stack access.
+
+When replacing the bootloader, back up Flash and write only `0x08000000`–`0x0800BFFF`; preserve the upgrade metadata at `0x0800C000`–`0x0800FFFF` and the application from `0x08010000`. USB/YMODEM application updates also populate the metadata required for automatic boot.
+
+Verified on hardware with the fixed bootloader and unchanged PIO application: automatic boot, Bootloader menu execution, USB sampling, and CRC-checked command responses. Cold-start display operation was confirmed by the user. Full runtime behavior has not been exhaustively tested.

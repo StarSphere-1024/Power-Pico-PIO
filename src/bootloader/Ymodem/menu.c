@@ -42,8 +42,6 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-pFunction Jump_To_Application;
-uint32_t JumpAddress;
 __IO uint32_t FlashProtection = 0;
 uint8_t tab_1024[1024] =
   {
@@ -286,13 +284,17 @@ void jump_to_app(void)
     SysTick->VAL = 0;
     __disable_irq();
 
-    //set JumpAddress
-    JumpAddress = *(__IO uint32_t*) (APPLICATION_ADDRESS + 4);
-    /* Jump to user application */
-    Jump_To_Application = (pFunction) JumpAddress;
-    /* Initialize user application's Stack Pointer */
-    __set_MSP(*(__IO uint32_t*) APPLICATION_ADDRESS);
-    Jump_To_Application();
+    const uint32_t app_stack = *(__IO uint32_t*) APPLICATION_ADDRESS;
+    const uint32_t app_reset = *(__IO uint32_t*) (APPLICATION_ADDRESS + 4);
+    /* No C epilogue or stack access is safe after replacing MSP. */
+    __asm volatile (
+        "msr msp, %0\n"
+        "bx %1\n"
+        :
+        : "r" (app_stack), "r" (app_reset)
+        : "memory"
+    );
+    __builtin_unreachable();
 }
 
 /**

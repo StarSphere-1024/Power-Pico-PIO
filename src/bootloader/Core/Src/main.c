@@ -57,8 +57,6 @@
 
 /* USER CODE BEGIN PV */
 
-extern pFunction Jump_To_Application;
-extern uint32_t JumpAddress;
 
 /* USER CODE END PV */
 
