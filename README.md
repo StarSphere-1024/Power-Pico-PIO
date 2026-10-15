@@ -14,6 +14,8 @@ This builds both environments and produces separate images under `.pio/build/boo
 
 The bootloader is linked at `0x08000000` with a 48 KiB limit. The application is linked at `0x08010000` with a 448 KiB limit. The images are not combined; flash them using the existing update/flash workflow.
 
+The application links newlib-nano's `_printf_float` with `-Wl,-u,_printf_float` so `sprintf`/`snprintf` can render floating-point readings on the main, PD, and PPS pages. Without it, `%f` produces blank numeric text. Main-page voltage/current/power display after cold start was confirmed by the user; USB sampling and CRC-checked command responses were also verified.
+
 ## Layout
 
 - `src/bootloader/`: bootloader, BSP, Ymodem, USB device, and linker script.
