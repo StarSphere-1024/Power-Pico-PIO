@@ -1,0 +1,18 @@
+{
+  "name": "LVGL",
+  "version": "9.5.0",
+  "build": {
+    "includeDir": ".",
+    "srcDir": ".",
+    "srcFilter": [
+      "+<src/**/*.c>",
+      "-<src/drivers/**>",
+      "+<porting/*.c>"
+    ],
+    "flags": [
+      "-Isrc",
+      "-Iporting"
+    ],
+    "libArchive": false
+  }
+}

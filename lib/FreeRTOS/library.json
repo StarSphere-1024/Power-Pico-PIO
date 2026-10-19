@@ -1,0 +1,19 @@
+{
+  "name": "FreeRTOS",
+  "version": "10.3.1",
+  "build": {
+    "includeDir": "Source/include",
+    "srcDir": "Source",
+    "srcFilter": [
+      "+<*.c>",
+      "+<CMSIS_RTOS_V2/*.c>",
+      "+<portable/MemMang/heap_4.c>",
+      "+<portable/GCC/ARM_CM4F/*.c>"
+    ],
+    "flags": [
+      "-ISource/CMSIS_RTOS_V2",
+      "-ISource/portable/GCC/ARM_CM4F"
+    ],
+    "libArchive": false
+  }
+}

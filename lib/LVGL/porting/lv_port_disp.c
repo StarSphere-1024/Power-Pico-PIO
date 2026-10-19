@@ -13,8 +13,8 @@
 #include <stdbool.h>
 
 // lcd
-#include "../../../BSP/LCD/lcd.h"
-#include "../../../BSP/LCD/lcd_init.h"
+#include "LCD/lcd.h"
+#include "LCD/lcd_init.h"
 
 /*********************
  *      DEFINES

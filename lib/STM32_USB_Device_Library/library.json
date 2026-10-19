@@ -1,0 +1,15 @@
+{
+  "name": "STM32_USB_Device_Library",
+  "build": {
+    "includeDir": "Core/Inc",
+    "srcDir": ".",
+    "srcFilter": [
+      "+<Core/Src/*.c>",
+      "+<Class/CDC/Src/*.c>"
+    ],
+    "flags": [
+      "-IClass/CDC/Inc"
+    ],
+    "libArchive": false
+  }
+}
