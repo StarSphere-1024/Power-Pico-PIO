@@ -96,7 +96,7 @@ static void set_val_cur_label(float voltage, float current)
         cur_disp = cur_uA;             // uA
         fmt_sig4(buf, sizeof(buf), cur_disp);
         lv_label_set_text(ui_LabelCur, buf);
-        lv_label_set_text(ui_LabelUnitCur, "uA");
+        lv_label_set_text(ui_LabelUnitCur, "µA");
     }
 
     // power = V * A，按 W/mW/uW 选择单位，4 位有效数字
@@ -114,7 +114,7 @@ static void set_val_cur_label(float voltage, float current)
     } else {
         fmt_sig4(buf, sizeof(buf), power_W * 1e6f); // uW
         lv_label_set_text(ui_LabelEnerge, buf);
-        lv_label_set_text(ui_LabelUnitEnerge, "uW");
+        lv_label_set_text(ui_LabelUnitEnerge, "µW");
     }
 
     // time
@@ -192,16 +192,17 @@ void ui_main_screen_init(void)
     lv_obj_set_y(ui_LabelUnitVal, 20);
     lv_obj_set_align(ui_LabelUnitVal, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_LabelUnitVal, "V");
-    lv_obj_set_style_text_font(ui_LabelUnitVal, &ui_font_HeiTi32, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelUnitVal, &ui_font_barlow_32, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelValt = lv_label_create(ui_HomeScreen);
-    lv_obj_set_width(ui_LabelValt, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_width(ui_LabelValt, 145);   /// 1
     lv_obj_set_height(ui_LabelValt, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_LabelValt, -30);
+    lv_obj_set_x(ui_LabelValt, -39);
     lv_obj_set_y(ui_LabelValt, 14);
     lv_obj_set_align(ui_LabelValt, LV_ALIGN_TOP_MID);
+    lv_obj_set_style_text_align(ui_LabelValt, LV_TEXT_ALIGN_RIGHT, 0);
     lv_label_set_text(ui_LabelValt, "0.00");
-    lv_obj_set_style_text_font(ui_LabelValt, &ui_font_HeiTi48, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelValt, &ui_font_barlow_48, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelUnitCur = lv_label_create(ui_HomeScreen);
     lv_obj_set_width(ui_LabelUnitCur, LV_SIZE_CONTENT);   /// 1
@@ -209,17 +210,18 @@ void ui_main_screen_init(void)
     lv_obj_set_x(ui_LabelUnitCur, 70);
     lv_obj_set_y(ui_LabelUnitCur, 80);
     lv_obj_set_align(ui_LabelUnitCur, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_LabelUnitCur, "uA");
-    lv_obj_set_style_text_font(ui_LabelUnitCur, &ui_font_HeiTi32, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_label_set_text(ui_LabelUnitCur, "µA");
+    lv_obj_set_style_text_font(ui_LabelUnitCur, &ui_font_barlow_32, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelCur = lv_label_create(ui_HomeScreen);
-    lv_obj_set_width(ui_LabelCur, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_width(ui_LabelCur, 145);   /// 1
     lv_obj_set_height(ui_LabelCur, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_LabelCur, -30);
+    lv_obj_set_x(ui_LabelCur, -39);
     lv_obj_set_y(ui_LabelCur, 74);
     lv_obj_set_align(ui_LabelCur, LV_ALIGN_TOP_MID);
+    lv_obj_set_style_text_align(ui_LabelCur, LV_TEXT_ALIGN_RIGHT, 0);
     lv_label_set_text(ui_LabelCur, "0.00");
-    lv_obj_set_style_text_font(ui_LabelCur, &ui_font_HeiTi48, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelCur, &ui_font_barlow_48, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelUnitEnerge = lv_label_create(ui_HomeScreen);
     lv_obj_set_width(ui_LabelUnitEnerge, LV_SIZE_CONTENT);   /// 1
@@ -228,16 +230,17 @@ void ui_main_screen_init(void)
     lv_obj_set_y(ui_LabelUnitEnerge, 140);
     lv_obj_set_align(ui_LabelUnitEnerge, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_LabelUnitEnerge, "mW");
-    lv_obj_set_style_text_font(ui_LabelUnitEnerge, &ui_font_HeiTi32, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelUnitEnerge, &ui_font_barlow_32, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelEnerge = lv_label_create(ui_HomeScreen);
-    lv_obj_set_width(ui_LabelEnerge, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_width(ui_LabelEnerge, 145);   /// 1
     lv_obj_set_height(ui_LabelEnerge, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_LabelEnerge, -30);
+    lv_obj_set_x(ui_LabelEnerge, -39);
     lv_obj_set_y(ui_LabelEnerge, 133);
     lv_obj_set_align(ui_LabelEnerge, LV_ALIGN_TOP_MID);
+    lv_obj_set_style_text_align(ui_LabelEnerge, LV_TEXT_ALIGN_RIGHT, 0);
     lv_label_set_text(ui_LabelEnerge, "0.00");
-    lv_obj_set_style_text_font(ui_LabelEnerge, &ui_font_HeiTi48, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelEnerge, &ui_font_barlow_48, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelTime = lv_label_create(ui_HomeScreen);
     lv_obj_set_width(ui_LabelTime, LV_SIZE_CONTENT);   /// 1
@@ -246,7 +249,7 @@ void ui_main_screen_init(void)
     lv_obj_set_y(ui_LabelTime, 190);
     lv_obj_set_align(ui_LabelTime, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_LabelTime, "00:00:00");
-    lv_obj_set_style_text_font(ui_LabelTime, &ui_font_HeiTi48, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelTime, &ui_font_barlow_48, LV_PART_MAIN | LV_STATE_DEFAULT);
     _flush_timer_cb(NULL);
     // flush timer
     _flush_timer = lv_timer_create(_flush_timer_cb, 100,  NULL);

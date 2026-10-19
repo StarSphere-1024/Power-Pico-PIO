@@ -92,9 +92,9 @@ static void _switch_pps_panel(void)
         lv_obj_set_style_border_width(btns[current_btn_index], 3, LV_PART_MAIN | LV_STATE_DEFAULT);
         lv_label_set_text(ui_LabelSwitch, _("press here to Fixed Set"));
         if(ui_get_language_select() == 0)
-            lv_obj_set_style_text_font(ui_LabelSwitch, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_font(ui_LabelSwitch, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
         else
-            lv_obj_set_style_text_font(ui_LabelSwitch, &ui_font_zhongyuan20, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_font(ui_LabelSwitch, &ui_font_glow_20, LV_PART_MAIN | LV_STATE_DEFAULT);
         _set_label_val_cur();
     }
     else
@@ -108,9 +108,9 @@ static void _switch_pps_panel(void)
         lv_obj_set_style_border_width(btns[current_btn_index], 3, LV_PART_MAIN | LV_STATE_DEFAULT);
         lv_label_set_text(ui_LabelSwitch, _("press to Step Adjust"));
         if(ui_get_language_select() == 0)
-            lv_obj_set_style_text_font(ui_LabelSwitch, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_font(ui_LabelSwitch, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
         else
-            lv_obj_set_style_text_font(ui_LabelSwitch, &ui_font_zhongyuan20, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_font(ui_LabelSwitch, &ui_font_glow_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     }
 }
@@ -272,7 +272,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_y(ui_LabelPPSVol, 0);
     lv_obj_set_align(ui_LabelPPSVol, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelPPSVol, "5.42");
-    lv_obj_set_style_text_font(ui_LabelPPSVol, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPPSVol, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelPPSVolUnit = lv_label_create(ui_PanelPPSVol);
     lv_obj_set_width(ui_LabelPPSVolUnit, LV_SIZE_CONTENT);   /// 1
@@ -281,7 +281,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_y(ui_LabelPPSVolUnit, 0);
     lv_obj_set_align(ui_LabelPPSVolUnit, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelPPSVolUnit, "V");
-    lv_obj_set_style_text_font(ui_LabelPPSVolUnit, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPPSVolUnit, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_PanelPPSCur = lv_obj_create(ui_PPSPage);
     lv_obj_set_width(ui_PanelPPSCur, 80);
@@ -300,7 +300,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_y(ui_LabelPPSCur, 0);
     lv_obj_set_align(ui_LabelPPSCur, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelPPSCur, "2.25");
-    lv_obj_set_style_text_font(ui_LabelPPSCur, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPPSCur, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelPPSCurUnit = lv_label_create(ui_PanelPPSCur);
     lv_obj_set_width(ui_LabelPPSCurUnit, LV_SIZE_CONTENT);   /// 1
@@ -309,7 +309,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_y(ui_LabelPPSCurUnit, 0);
     lv_obj_set_align(ui_LabelPPSCurUnit, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelPPSCurUnit, "A");
-    lv_obj_set_style_text_font(ui_LabelPPSCurUnit, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPPSCurUnit, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Spinner1 = lv_spinner_create(ui_PPSPage);
     //lv_spinner_set_anim_params(ui_Spinner1, 1000, 90);
@@ -352,7 +352,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelSet1, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelSet1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelSet1, "5V  1A");
-    lv_obj_set_style_text_font(ui_LabelSet1, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSet1, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnSet2 = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnSet2, 100);
@@ -371,7 +371,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelSet2, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelSet2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelSet2, "9V  1A");
-    lv_obj_set_style_text_font(ui_LabelSet2, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSet2, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnSet3 = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnSet3, 100);
@@ -390,7 +390,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelSet3, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelSet3, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelSet3, "12V  1A");
-    lv_obj_set_style_text_font(ui_LabelSet3, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSet3, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnSet4 = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnSet4, 100);
@@ -409,7 +409,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelSet4, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelSet4, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelSet4, "15V  1A");
-    lv_obj_set_style_text_font(ui_LabelSet4, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSet4, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnSet5 = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnSet5, 100);
@@ -428,7 +428,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelSet5, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelSet5, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelSet5, "18V  1A");
-    lv_obj_set_style_text_font(ui_LabelSet5, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSet5, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnSet6 = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnSet6, 100);
@@ -447,7 +447,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelSet6, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelSet6, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelSet6, "20V  1A");
-    lv_obj_set_style_text_font(ui_LabelSet6, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSet6, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnValSet = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnValSet, 100);
@@ -463,7 +463,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelValSet, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelValSet, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelValSet, "5.00 V");
-    lv_obj_set_style_text_font(ui_LabelValSet, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelValSet, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnValDec = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnValDec, 30);
@@ -484,7 +484,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_y(ui_LabelValDec, -7);
     lv_obj_set_align(ui_LabelValDec, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelValDec, "_");
-    lv_obj_set_style_text_font(ui_LabelValDec, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelValDec, &ui_font_barlow_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnValInc = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnValInc, 30);
@@ -503,7 +503,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelValInc, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelValInc, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelValInc, "+");
-    lv_obj_set_style_text_font(ui_LabelValInc, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelValInc, &ui_font_barlow_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnCurSet = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnCurSet, 100);
@@ -519,7 +519,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelCurSet, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelCurSet, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelCurSet, "1.00 A");
-    lv_obj_set_style_text_font(ui_LabelCurSet, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelCurSet, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnCurDec = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnCurDec, 30);
@@ -540,7 +540,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_y(ui_LabelCurDec, -7);
     lv_obj_set_align(ui_LabelCurDec, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelCurDec, "_");
-    lv_obj_set_style_text_font(ui_LabelCurDec, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelCurDec, &ui_font_barlow_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnCurInc = lv_button_create(ui_PanelPPS);
     lv_obj_set_width(ui_BtnCurInc, 30);
@@ -559,7 +559,7 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_height(ui_LabelCurInc, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelCurInc, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelCurInc, "+");
-    lv_obj_set_style_text_font(ui_LabelCurInc, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelCurInc, &ui_font_barlow_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnSwitch = lv_button_create(ui_PPSPage);
     lv_obj_set_width(ui_BtnSwitch, 210);
@@ -582,9 +582,9 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_align(ui_LabelSwitch, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelSwitch, _("press to Step Adjust"));
     if(ui_get_language_select() == 0)
-        lv_obj_set_style_text_font(ui_LabelSwitch, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_font(ui_LabelSwitch, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
     else
-        lv_obj_set_style_text_font(ui_LabelSwitch, &ui_font_zhongyuan20, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_font(ui_LabelSwitch, &ui_font_glow_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnClose = lv_button_create(ui_PPSPage);
     lv_obj_set_width(ui_BtnClose, 210);
@@ -606,9 +606,9 @@ void ui_PPSPage_screen_init(void)
     lv_obj_set_align(ui_LabelClose, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelClose, _("press here to close PPS"));
     if(ui_get_language_select() == 0)
-        lv_obj_set_style_text_font(ui_LabelClose, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_font(ui_LabelClose, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
     else
-        lv_obj_set_style_text_font(ui_LabelClose, &ui_font_zhongyuan20, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_font(ui_LabelClose, &ui_font_glow_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_pps_timer = lv_timer_create(_flush_timer_cb, 500, NULL);
 

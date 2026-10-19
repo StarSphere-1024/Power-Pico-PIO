@@ -138,7 +138,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_y(ui_LabelPDVol, 0);
     lv_obj_set_align(ui_LabelPDVol, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelPDVol, "5.42");
-    lv_obj_set_style_text_font(ui_LabelPDVol, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDVol, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelPDVolUnit = lv_label_create(ui_PanelPDVol);
     lv_obj_set_width(ui_LabelPDVolUnit, LV_SIZE_CONTENT);   /// 1
@@ -147,7 +147,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_y(ui_LabelPDVolUnit, 0);
     lv_obj_set_align(ui_LabelPDVolUnit, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelPDVolUnit, "V");
-    lv_obj_set_style_text_font(ui_LabelPDVolUnit, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDVolUnit, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_PanelPDCur = lv_obj_create(ui_PDFixedPage);
     lv_obj_set_width(ui_PanelPDCur, 80);
@@ -166,7 +166,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_y(ui_LabelPDCur, 0);
     lv_obj_set_align(ui_LabelPDCur, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelPDCur, "2.25");
-    lv_obj_set_style_text_font(ui_LabelPDCur, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDCur, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelPDCurUnit = lv_label_create(ui_PanelPDCur);
     lv_obj_set_width(ui_LabelPDCurUnit, LV_SIZE_CONTENT);   /// 1
@@ -175,7 +175,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_y(ui_LabelPDCurUnit, 0);
     lv_obj_set_align(ui_LabelPDCurUnit, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelPDCurUnit, "A");
-    lv_obj_set_style_text_font(ui_LabelPDCurUnit, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDCurUnit, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Spinner2 = lv_spinner_create(ui_PDFixedPage);
     lv_obj_set_width(ui_Spinner2, 25);
@@ -205,7 +205,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_height(ui_LabelPDSet1, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelPDSet1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelPDSet1, "5V  1A");
-    lv_obj_set_style_text_font(ui_LabelPDSet1, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDSet1, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnPDSet2 = lv_btn_create(ui_PDFixedPage);
     lv_obj_set_width(ui_BtnPDSet2, 100);
@@ -224,7 +224,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_height(ui_LabelPDSet2, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelPDSet2, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelPDSet2, "9V  1A");
-    lv_obj_set_style_text_font(ui_LabelPDSet2, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDSet2, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnPDSet3 = lv_btn_create(ui_PDFixedPage);
     lv_obj_set_width(ui_BtnPDSet3, 100);
@@ -243,7 +243,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_height(ui_LabelPDSet3, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelPDSet3, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelPDSet3, "12V  1A");
-    lv_obj_set_style_text_font(ui_LabelPDSet3, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDSet3, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnPDSet4 = lv_btn_create(ui_PDFixedPage);
     lv_obj_set_width(ui_BtnPDSet4, 100);
@@ -262,7 +262,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_height(ui_LabelPDSet4, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelPDSet4, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelPDSet4, "15V  1A");
-    lv_obj_set_style_text_font(ui_LabelPDSet4, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDSet4, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnPDSet5 = lv_btn_create(ui_PDFixedPage);
     lv_obj_set_width(ui_BtnPDSet5, 100);
@@ -281,7 +281,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_height(ui_LabelPDSet5, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelPDSet5, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelPDSet5, "20V  1A");
-    lv_obj_set_style_text_font(ui_LabelPDSet5, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDSet5, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_BtnPDClose = lv_btn_create(ui_PDFixedPage);
     lv_obj_set_width(ui_BtnPDClose, 210);
@@ -302,7 +302,7 @@ void ui_PDFixedPage_screen_init(void)
     lv_obj_set_height(ui_LabelPDClose, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelPDClose, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LabelPDClose, _("press here to close PD"));
-    lv_obj_set_style_text_font(ui_LabelPDClose, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelPDClose, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_pd_fixed_timer = lv_timer_create(_flush_timer_cb, 500, NULL);
 

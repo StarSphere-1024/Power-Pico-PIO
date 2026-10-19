@@ -70,7 +70,7 @@ void ui_StartPage_screen_init(void)
     lv_obj_set_y(ui_Label1, 45);
     lv_obj_set_align(ui_Label1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Label1, "Power-Pico");
-    lv_obj_set_style_text_font(ui_Label1, &lv_font_montserrat_28, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Label1, &ui_font_barlow_28, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Panel2 = lv_obj_create(ui_StartPage);
     lv_obj_set_width(ui_Panel2, 150);

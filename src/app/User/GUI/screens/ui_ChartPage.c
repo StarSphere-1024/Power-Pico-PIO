@@ -281,7 +281,7 @@ void ui_ChartPage_screen_init(void)
     lv_obj_set_y(ui_LabelVol, 0);
     lv_obj_set_align(ui_LabelVol, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelVol, "5.42");
-    lv_obj_set_style_text_font(ui_LabelVol, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelVol, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelVolUnit = lv_label_create(ui_PanelVol);
     lv_obj_set_width(ui_LabelVolUnit, LV_SIZE_CONTENT);   /// 1
@@ -290,7 +290,7 @@ void ui_ChartPage_screen_init(void)
     lv_obj_set_y(ui_LabelVolUnit, 0);
     lv_obj_set_align(ui_LabelVolUnit, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelVolUnit, "V");
-    lv_obj_set_style_text_font(ui_LabelVolUnit, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelVolUnit, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_PanelCur = lv_obj_create(ui_ChartPage);
     lv_obj_set_width(ui_PanelCur, 100);
@@ -309,7 +309,7 @@ void ui_ChartPage_screen_init(void)
     lv_obj_set_y(ui_LabelCur1, 0);
     lv_obj_set_align(ui_LabelCur1, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelCur1, "15.23");
-    lv_obj_set_style_text_font(ui_LabelCur1, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelCur1, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelCurUnit = lv_label_create(ui_PanelCur);
     lv_obj_set_width(ui_LabelCurUnit, LV_SIZE_CONTENT);   /// 1
@@ -318,7 +318,7 @@ void ui_ChartPage_screen_init(void)
     lv_obj_set_y(ui_LabelCurUnit, 0);
     lv_obj_set_align(ui_LabelCurUnit, LV_ALIGN_RIGHT_MID);
     lv_label_set_text(ui_LabelCurUnit, "mA");
-    lv_obj_set_style_text_font(ui_LabelCurUnit, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelCurUnit, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_ButState = lv_button_create(ui_ChartPage);
     lv_obj_set_width(ui_ButState, 35);
@@ -335,7 +335,8 @@ void ui_ChartPage_screen_init(void)
     lv_obj_set_width(ui_LabelState, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_LabelState, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelState, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_LabelState, LV_SYMBOL_PLAY);
+    lv_label_set_text(ui_LabelState, "▶");
+    lv_obj_set_style_text_font(ui_LabelState, &ui_font_glow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     // timer
     chart_update_timer = lv_timer_create(_chart_update_cb, 100, NULL); // 每100ms更新一次数据
