@@ -249,7 +249,7 @@ void ui_main_screen_init(void)
     lv_obj_set_style_text_font(ui_LabelTime, &ui_font_HeiTi48, LV_PART_MAIN | LV_STATE_DEFAULT);
     _flush_timer_cb(NULL);
     // flush timer
-    _flush_timer = lv_timer_create(_flush_timer_cb, 250,  NULL);
+    _flush_timer = lv_timer_create(_flush_timer_cb, 100,  NULL);
 
 }
 
