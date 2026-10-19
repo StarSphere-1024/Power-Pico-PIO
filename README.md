@@ -10,11 +10,28 @@ Install PlatformIO Core, then run from this directory:
 pio run
 ```
 
-This builds both environments and produces separate images under `.pio/build/bootloader/` and `.pio/build/power_pico/`. Build one environment with `pio run -e bootloader` or `pio run -e power_pico`.
+This builds the application by default. Build the bootloader explicitly with `pio run -e bootloader`, or build both with `pio run -e bootloader -e power_pico`. Images are produced under `.pio/build/bootloader/` and `.pio/build/power_pico/`.
 
-The bootloader is linked at `0x08000000` with a 48 KiB limit. The application is linked at `0x08010000` with a 448 KiB limit. The images are not combined; flash them using the existing update/flash workflow.
+The bootloader is linked at `0x08000000` with a 48 KiB limit. The application is linked at `0x08010000` with a 448 KiB limit. The images are not combined.
 
 The application links newlib-nano's `_printf_float` with `-Wl,-u,_printf_float` so `sprintf`/`snprintf` can render floating-point readings on the main, PD, and PPS pages. Without it, `%f` produces blank numeric text. Main-page voltage/current/power display after cold start was confirmed by the user; USB sampling and CRC-checked command responses were also verified.
+
+The display monitor averages 100 ms of samples, and the main-page numeric labels update every 100 ms (nominal 10 Hz). ADC acquisition remains at 10,000 five-channel scans per second; USB packet format and PD/PPS page timers are unchanged. The application build and a host smoke run of `Process_ADC_Chunk()` verified average updates at 100 ms boundaries; physical display refresh has not been verified on hardware for this change.
+
+## Upload
+
+DAPLink/CMSIS-DAP over SWD is the default upload interface. Upload only the application with:
+
+```sh
+pio run -t upload
+```
+
+`scripts/daplink-upload.py` registers CMSIS-DAP support for the generic board and, for application uploads, backs up the full metadata sector to `.pio/build/power_pico/upgrade-info-before-upload.bin`. It calculates the bootloader-compatible STM32 CRC32, updates the 16-byte upgrade record, and preserves the rest of that sector. OpenOCD programs and verifies the application and metadata, then resets the target. The bootloader is not rewritten. The backup is replaced on the next upload.
+
+Upload the bootloader only when intentionally replacing it: `pio run -e bootloader -t upload`. This does not update the application or its metadata. No serial upload port is needed for CMSIS-DAP.
+
+Verified using `pio run -t upload` with DAPLink: both flash verifications passed, reset entered the application, and metadata readback preserved all bytes outside the upgrade record. Run `python tests/check_daplink_upload.py` to check CRC word order, partial-word handling, and metadata preservation without hardware.
+
 
 ## Layout
 
@@ -30,7 +47,7 @@ Each private library's `library.json` owns its source filters and include paths.
 
 Each firmware keeps its own `USB_DEVICE/App` and `USB_DEVICE/Target`, including descriptors, CDC callbacks, `usbd_conf.h`, and HAL adaptation. The shared USB library is compiled separately for each environment using that firmware's include paths.
 
-The library extractions were verified by building both environments and checking USB core/CDC and adapter symbols, USB interrupt vectors, and application RTOS interrupt vectors. The firmware has not been reflashed or retested on hardware after extraction.
+The library extractions were verified by building both environments and checking USB core/CDC and adapter symbols, USB interrupt vectors, and application RTOS interrupt vectors. The application has since been reflashed through DAPLink and confirmed to enter application code after reset; USB sampling and command responses have not been rechecked after extraction.
 
 ## Bootloader compatibility
 
