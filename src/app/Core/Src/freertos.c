@@ -54,7 +54,7 @@ volatile TaskHandle_t g_overflow_task_handle = 0;
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 128 * 1,
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
 
