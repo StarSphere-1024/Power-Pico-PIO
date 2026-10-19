@@ -14,7 +14,7 @@ LV_FONT_DECLARE(ui_font_barlow_18);
 LV_FONT_DECLARE(ui_font_barlow_20);
 LV_FONT_DECLARE(ui_font_barlow_22);
 LV_FONT_DECLARE(ui_font_barlow_28);
-LV_FONT_DECLARE(ui_font_barlow_32);
+LV_FONT_DECLARE(ui_font_barlow_36);
 LV_FONT_DECLARE(ui_font_barlow_48);
 LV_FONT_DECLARE(ui_font_glow_18);
 LV_FONT_DECLARE(ui_font_glow_20);

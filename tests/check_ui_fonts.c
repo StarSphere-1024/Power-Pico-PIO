@@ -25,7 +25,7 @@ int main(void)
     const lv_font_t *barlow[] = {
         &ui_font_barlow_14, &ui_font_barlow_16, &ui_font_barlow_18,
         &ui_font_barlow_20, &ui_font_barlow_22, &ui_font_barlow_28,
-        &ui_font_barlow_32, &ui_font_barlow_48
+        &ui_font_barlow_36, &ui_font_barlow_48
     };
     for (unsigned i = 0; i < sizeof(barlow) / sizeof(*barlow); ++i) {
         lv_font_glyph_dsc_t zero;
@@ -37,7 +37,7 @@ int main(void)
                 assert(!glyph.is_placeholder && glyph.adv_w == zero.adv_w);
             }
         }
-        if (barlow[i] == &ui_font_barlow_32 || barlow[i] == &ui_font_barlow_48) {
+        if (barlow[i] == &ui_font_barlow_36 || barlow[i] == &ui_font_barlow_48) {
             assert(zero.format == LV_FONT_GLYPH_FORMAT_A4);
             zero.req_raw_bitmap = 1;
             const uint8_t *bitmap = zero.resolved_font->get_glyph_bitmap(&zero, NULL);
@@ -48,7 +48,14 @@ int main(void)
             assert(alpha == 0);
         }
     }
-    check_text(&ui_font_barlow_32, "µAmAAµWmWW");
+    check_text(&ui_font_barlow_36, "µAmAAµWmWW");
+    const char *unit_texts[] = {"V", "µA", "µW", "mW"};
+    for (unsigned i = 0; i < sizeof(unit_texts) / sizeof(*unit_texts); ++i) {
+        lv_point_t text_size;
+        lv_text_get_size(&text_size, unit_texts[i], &ui_font_barlow_36, 0, 0,
+                         LV_COORD_MAX, LV_TEXT_FLAG_NONE);
+        assert(text_size.x <= 64);
+    }
     check_text(&ui_font_barlow_48, "-0123456789.:");
 
     const lv_font_t *glow[] = {&ui_font_glow_18, &ui_font_glow_20};

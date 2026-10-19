@@ -23,7 +23,8 @@ BARLOW_SOURCE = "https://github.com/jpt/barlow/tree/b4726ddf91525818e85e5fce111c
 GLOW_SOURCE = "https://github.com/welai/glow-sans/releases/tag/v0.93"
 
 BARLOW_GLYPHS = {size: None for size in (14, 16, 18, 20, 22, 28)}
-BARLOW_GLYPHS.update({32: "0123456789.-:VµAmW", 48: "0123456789.-:"})
+
+BARLOW_GLYPHS.update({36: "0123456789.-:VµAmW", 48: "0123456789.-:"})
 ZH_MESSAGES = {
     18: (
         "Screen Brightness :",
@@ -186,7 +187,8 @@ def finalize_c(path: Path, symbol: str) -> None:
 
 
 def write_header() -> None:
-    symbols = [*(f"ui_font_barlow_{size}" for size in (14, 16, 18, 20, 22, 28, 32, 48)),
+
+    symbols = [*(f"ui_font_barlow_{size}" for size in (14, 16, 18, 20, 22, 28, 36, 48)),
                "ui_font_glow_18", "ui_font_glow_20"]
     declarations = "\n".join(f"LV_FONT_DECLARE({symbol});" for symbol in symbols)
     header = (

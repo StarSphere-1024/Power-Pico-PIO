@@ -22,7 +22,7 @@ The display monitor averages 100 ms of samples, and the main-page numeric labels
 
 ## Fonts
 
-The application uses **Barlow Semi Condensed Medium 1.408** for Latin text, numbers, and units, and **Glow Sans SC Normal Regular 0.93** for Chinese. Barlow's `tnum` alternate digit outlines are baked into the exported character map, with kerning disabled; LVGL needs no runtime OpenType shaping. The zero has no dot or slash. Main-page numeric fields are right-aligned so equal-width digits do not move when readings change. Visible micro-units use U+00B5 (`µA`, `µW`), without changing internal measurement units or USB data.
+The application uses **Barlow Semi Condensed Medium 1.408** for Latin text, numbers, and units, and **Glow Sans SC Normal Regular 0.93** for Chinese. Barlow's `tnum` alternate digit outlines are baked into the exported character map, with kerning disabled; LVGL needs no runtime OpenType shaping. The zero has no dot or slash. Main-page numeric fields are right-aligned so equal-width digits do not move when readings change; their unit labels use a separate 36px font for improved readability. Visible micro-units use U+00B5 (`µA`, `µW`), without changing internal measurement units or USB data.
 
 Unmodified source fonts and their SIL OFL 1.1 licenses are in `assets/fonts/`; generated 4-bpp, uncompressed LVGL fonts are checked into `src/app/User/GUI/font/`. Source hashes and provenance are recorded in `assets/fonts/generate_fonts.py`. Chinese fonts contain only the UI's required glyphs and use matching Barlow fonts for Latin fallback. The chart's play indicator uses Glow Sans's Unicode triangle instead of a private-use icon-font glyph.
 

@@ -192,7 +192,7 @@ void ui_main_screen_init(void)
     lv_obj_set_y(ui_LabelUnitVal, 20);
     lv_obj_set_align(ui_LabelUnitVal, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_LabelUnitVal, "V");
-    lv_obj_set_style_text_font(ui_LabelUnitVal, &ui_font_barlow_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelUnitVal, &ui_font_barlow_36, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelValt = lv_label_create(ui_HomeScreen);
     lv_obj_set_width(ui_LabelValt, 145);   /// 1
@@ -211,7 +211,7 @@ void ui_main_screen_init(void)
     lv_obj_set_y(ui_LabelUnitCur, 80);
     lv_obj_set_align(ui_LabelUnitCur, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_LabelUnitCur, "µA");
-    lv_obj_set_style_text_font(ui_LabelUnitCur, &ui_font_barlow_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelUnitCur, &ui_font_barlow_36, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelCur = lv_label_create(ui_HomeScreen);
     lv_obj_set_width(ui_LabelCur, 145);   /// 1
@@ -230,7 +230,7 @@ void ui_main_screen_init(void)
     lv_obj_set_y(ui_LabelUnitEnerge, 140);
     lv_obj_set_align(ui_LabelUnitEnerge, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_LabelUnitEnerge, "mW");
-    lv_obj_set_style_text_font(ui_LabelUnitEnerge, &ui_font_barlow_32, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelUnitEnerge, &ui_font_barlow_36, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelEnerge = lv_label_create(ui_HomeScreen);
     lv_obj_set_width(ui_LabelEnerge, 145);   /// 1
