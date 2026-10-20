@@ -1,0 +1,3 @@
+#ifndef SETTINGS_TEST_ADC_H
+#define SETTINGS_TEST_ADC_H
+#endif

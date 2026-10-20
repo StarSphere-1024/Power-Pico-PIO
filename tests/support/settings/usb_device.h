@@ -1,0 +1,4 @@
+#ifndef SETTINGS_TEST_USB_DEVICE_H
+#define SETTINGS_TEST_USB_DEVICE_H
+void USER_USB_DEVICE_DeInit(void);
+#endif

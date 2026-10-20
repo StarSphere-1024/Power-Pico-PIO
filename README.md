@@ -35,7 +35,7 @@ uv run --with-requirements assets/fonts/requirements.txt python assets/fonts/gen
 
 The converter and fontTools versions are pinned. When adding Chinese labels, update the generator's per-size `ZH_MESSAGES` mapping alongside the translations; do not edit generated C files. Regeneration was verified byte-for-byte reproducible.
 
-Run `python tests/check_ui_fonts.py` with CMake and a native C compiler to check exported digit spacing, the unmarked zero, micro-unit glyphs, Chinese translations, and Latin fallback through LVGL's actual font API. The application build and native LVGL rendering of startup, main, chart, settings/popups, PD, and both PPS panels were verified in English and Chinese, including main-page unit boundaries, negative readings, and `255:59:59` timer fit. The firmware has not been flashed or visually checked on the physical LCD for this font change. Ah accumulation is not part of this change.
+Run `pio test -e native_fonts` with a native GCC toolchain to check exported digit spacing, the unmarked zero, micro-unit glyphs, Chinese translations, and Latin fallback through LVGL's actual font API. The Unity suite runs on the host without CMake or a connected board; the STM32 LCD port is excluded. The application build and native LVGL rendering of startup, main, chart, settings/popups, PD, and both PPS panels were verified in English and Chinese, including main-page unit boundaries, negative readings, and `255:59:59` timer fit. The firmware has not been flashed or visually checked on the physical LCD for this font change. Ah accumulation is not part of this change.
 
 ## Persistent settings and immutable calibration
 
@@ -102,14 +102,27 @@ saves show a transient, coalesced error banner. Firmware update proceeds only
 after its EEPROM command has been written and verified. Downgrading to the old
 raw-structure firmware sees only the frozen legacy settings, not later changes.
 
-Run `python tests/check_settings.py` with a native C compiler. It executes the
-real storage, calibration validation, and command parser against a
-256-byte EEPROM model, using a fresh process for each simulated boot. Checks
-cover every written-byte interruption point during initial migration (102) and
-a user save (34), read-only calibration commands, backup integrity, independent
-domains, unknown schemas, generation wrap/conflicts, I/O failure, reentry, and
-preservation of interrupt state. `--image PATH` additionally smoke-migrates a
-temporary copy of a 256-byte EEPROM dump; the input file is never modified.
+Run `pio test -e native_settings` with a native GCC toolchain. The Unity suite
+executes the real storage, calibration validation, and command parser against a
+256-byte EEPROM model. It covers migration and persistence, read-only calibration
+commands, backup integrity, independent domains, unknown schemas, generation
+wrap/conflicts, I/O failure, unchanged writes, reentry, and interrupt-state
+preservation. Run both native suites with:
+
+```sh
+pio test -e native_fonts -e native_settings
+```
+
+These environments run on the host without flashing a board and do not inherit
+STM32 flags or upload hooks. Firmware builds still default to `power_pico`.
+
+Run `python tests/check_settings.py` separately for every written-byte interruption
+point during initial migration (102) and a user save (34). Each simulated boot
+uses a fresh process, including fresh BSS/static state; ordinary Unity reload
+checks are not a substitute for this reset isolation. Both runners share the
+same EEPROM/HAL/RTOS test support.
+`--image PATH` additionally smoke-migrates a temporary copy of a 256-byte EEPROM
+dump; the input file is never modified.
 The saved device EEPROM dump was exercised this way. Byte-cut simulation is not
 a physical EEPROM power-cut guarantee; hardware corruption patterns can instead
 lead to a visible failure requiring external recovery.
