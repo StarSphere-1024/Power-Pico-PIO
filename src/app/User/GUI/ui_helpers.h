@@ -45,7 +45,7 @@ void ui_update_vol_cur_varables(float voltage, float current);
 void ui_clear_data_monitor(void);
 
 // sys save function
-void ui_system_settings_save(void);
+bool ui_system_settings_save(void);
 
 ///////////////////////////////////////////////////////////////
 

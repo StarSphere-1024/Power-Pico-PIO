@@ -36,6 +36,7 @@ static lv_obj_t * ui_PanelAbout = NULL;
 static lv_obj_t * ui_LabelAbout = NULL;
 
 static lv_timer_t * _setting_timer = NULL;
+static lv_timer_t * settings_save_error_timer = NULL;
 
 static lv_obj_t * msgbox = NULL;  // msgbox 对象
 static lv_obj_t * spinner = NULL; // spinner 对象
@@ -48,6 +49,7 @@ static void show_wait_msgbox(void);
 static void hide_wait_msgbox(void);
 static void show_fail_msgbox(void);
 static void show_restart_msgbox(void);
+static void show_settings_save_error(void);
 
 #include "gate.h"
 static void _set_range_label_text(uint8_t mode)
@@ -91,6 +93,7 @@ static void _setting_timer_cb(lv_timer_t * timer) {
 #include "key.h"
 void ui_set_page_key_handler(void *key_event)
 {
+    bool setting_input_event = false;
     if(waiting_for_signal) return;
     int panel_count = sizeof(panels) / sizeof(panels[0]);
     // key boot
@@ -128,6 +131,7 @@ void ui_set_page_key_handler(void *key_event)
                     if(slider_value > 100) slider_value = 100;
                     lv_slider_set_value(ui_SliderBL, slider_value, LV_ANIM_ON);
                     ui_set_back_light_level(slider_value);
+                    setting_input_event = true;
                 } else if (((key_event_t*)key_event)->id == KEY_ID_N &&
                             (((key_event_t*)key_event)->type == KEY_EVT_CLICK || ((key_event_t*)key_event)->type == KEY_EVT_REPEAT)) { // key neg
                     int16_t slider_value = lv_slider_get_value(ui_SliderBL);
@@ -135,6 +139,7 @@ void ui_set_page_key_handler(void *key_event)
                     if(slider_value < 10) slider_value = 10;
                     lv_slider_set_value(ui_SliderBL, slider_value, LV_ANIM_ON);
                     ui_set_back_light_level(slider_value);
+                    setting_input_event = true;
                 }
                 break;
             // key sound
@@ -144,12 +149,14 @@ void ui_set_page_key_handler(void *key_event)
                 {
                     lv_obj_add_state(ui_SwitchKS, LV_STATE_CHECKED);
                     ui_set_key_sound_enable(1);
+                    setting_input_event = true;
                 }
                 // key neg
                 else if (((key_event_t*)key_event)->id == KEY_ID_N && ((key_event_t*)key_event)->type == KEY_EVT_CLICK)
                 {
                     lv_obj_clear_state(ui_SwitchKS, LV_STATE_CHECKED);
                     ui_set_key_sound_enable(0);
+                    setting_input_event = true;
                 }
                 break;
 
@@ -161,6 +168,7 @@ void ui_set_page_key_handler(void *key_event)
                     show_restart_msgbox();
                     lv_obj_add_state(ui_SwitchLang, LV_STATE_CHECKED);
                     ui_set_language_select(1);
+                    setting_input_event = true;
                     lv_i18n_set_locale("zh-cn");
                 }
                 // key neg
@@ -170,6 +178,7 @@ void ui_set_page_key_handler(void *key_event)
                     lv_obj_clear_state(ui_SwitchLang, LV_STATE_CHECKED);
                     ui_set_language_select(0);
                     lv_i18n_set_locale("en");
+                    setting_input_event = true;
                 }
                 break;
 
@@ -185,6 +194,9 @@ void ui_set_page_key_handler(void *key_event)
                 else if (((key_event_t*)key_event)->id == KEY_ID_N && ((key_event_t*)key_event)->type == KEY_EVT_CLICK)
                 {
                     rotation = (rotation + 360 - 90) % 360;
+                }
+                if (((key_event_t*)key_event)->type == KEY_EVT_CLICK) {
+                    setting_input_event = true;
                 }
                 if (rotation == 0) {
                     lv_label_set_text(ui_LabelRotNum, "<  0  >");
@@ -212,6 +224,9 @@ void ui_set_page_key_handler(void *key_event)
                 {
                     mode = (mode + 3U) % 4U;
                 }
+                if (((key_event_t*)key_event)->type == KEY_EVT_CLICK) {
+                    setting_input_event = true;
+                }
                 ui_set_current_range_mode(mode);
                 _set_range_label_text(mode);
                 break;
@@ -235,8 +250,9 @@ void ui_set_page_key_handler(void *key_event)
                 // do nothing
                 break;
         }
-        // save settings to eeprom
-        ui_system_settings_save();
+        if (setting_input_event && !ui_system_settings_save()) {
+            show_settings_save_error();
+        }
     }
 }
 
@@ -382,6 +398,34 @@ static void show_fail_msgbox(void) {
     // 设置定时器，2 秒后关闭弹窗
     lv_timer_t * timer = lv_timer_create(_fail_msgbox_timer_cb, 2000, msgbox); // 传递 msgbox 对象
     lv_timer_set_repeat_count(timer, 1); // 只执行一次
+}
+
+static void settings_save_error_expired(lv_timer_t *timer)
+{
+    lv_obj_delete(lv_timer_get_user_data(timer));
+    settings_save_error_timer = NULL;
+}
+
+static void show_settings_save_error(void)
+{
+    if (settings_save_error_timer != NULL) {
+        lv_timer_reset(settings_save_error_timer);
+        return;
+    }
+
+    lv_obj_t *toast = lv_obj_create(lv_layer_top());
+    lv_obj_set_size(toast, 220, 54);
+    lv_obj_align(toast, LV_ALIGN_TOP_MID, 0, 8);
+    lv_obj_set_style_bg_color(toast, lv_color_hex(0xB03030), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(toast, 240, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_t *label = lv_label_create(toast);
+    lv_label_set_text(label, "Settings save failed");
+    lv_obj_center(label);
+    lv_obj_set_style_text_font(label, &ui_font_barlow_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    settings_save_error_timer = lv_timer_create(settings_save_error_expired, 2500, toast);
+    lv_timer_set_repeat_count(settings_save_error_timer, 1);
 }
 
 /////////////////////// ui_initialize //////////////////////

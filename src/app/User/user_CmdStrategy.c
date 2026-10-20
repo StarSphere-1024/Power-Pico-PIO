@@ -25,6 +25,7 @@ typedef enum {
     CMD_STATUS_EEPROM_ERROR = 5,
     CMD_STATUS_BUSY = 6,
     CMD_STATUS_CRC_ERROR = 7,
+    CMD_STATUS_READ_ONLY = 8,
 } CmdStatus_t;
 
 typedef struct {
@@ -61,13 +62,6 @@ static void CmdStrategy_WriteU32(uint8_t *destination, uint32_t value)
     destination[3] = (uint8_t)(value >> 24);
 }
 
-static uint32_t CmdStrategy_ReadU32(const uint8_t *source)
-{
-    return (uint32_t)source[0]
-        | ((uint32_t)source[1] << 8)
-        | ((uint32_t)source[2] << 16)
-        | ((uint32_t)source[3] << 24);
-}
 
 static void CmdStrategy_WriteFloat(uint8_t *destination, float value)
 {
@@ -77,14 +71,6 @@ static void CmdStrategy_WriteFloat(uint8_t *destination, float value)
     CmdStrategy_WriteU32(destination, bits);
 }
 
-static float CmdStrategy_ReadFloat(const uint8_t *source)
-{
-    uint32_t bits = CmdStrategy_ReadU32(source);
-    float value;
-
-    memcpy(&value, &bits, sizeof(value));
-    return value;
-}
 
 static uint16_t CmdStrategy_Crc16(const uint8_t *data, uint16_t length)
 {
@@ -261,36 +247,11 @@ static void CmdStrategy_WriteCalibrationPayload(uint8_t *payload,
     CmdStrategy_WriteFloat(&payload[20], calibration->high_offset_ua);
 }
 
-static void CmdStrategy_ReadCalibrationPayload(ADC_Calibration_t *calibration,
-                                               const uint8_t *payload)
-{
-    calibration->low_scale_multiplier = CmdStrategy_ReadFloat(&payload[0]);
-    calibration->low_offset_ua = CmdStrategy_ReadFloat(&payload[4]);
-    calibration->mid_scale_multiplier = CmdStrategy_ReadFloat(&payload[8]);
-    calibration->mid_offset_ua = CmdStrategy_ReadFloat(&payload[12]);
-    calibration->high_scale_multiplier = CmdStrategy_ReadFloat(&payload[16]);
-    calibration->high_offset_ua = CmdStrategy_ReadFloat(&payload[20]);
-}
-
-static CmdStatus_t CmdStrategy_SaveCalibration(const ADC_Calibration_t *calibration)
-{
-    ADC_Calibration_t previous;
-
-    Sys_Get_AdcCalibration(&previous);
-    if (!Sys_Set_AdcCalibration(calibration)) {
-        return CMD_STATUS_INVALID_PARAMETER;
-    }
-    if (!EEPROM_SysSetting_Save()) {
-        Sys_Set_AdcCalibration(&previous);
-        return CMD_STATUS_EEPROM_ERROR;
-    }
-    return CMD_STATUS_OK;
-}
 
 static bool CmdStrategy_Execute(const CmdFrame_t *request, CmdTxFrame_t *response)
 {
     CmdStatus_t status = CMD_STATUS_OK;
-    ADC_Calibration_t calibration;
+    EEPROM_LoadStatus_t calibration_status;
     uint8_t payload[CMD_PROTOCOL_MAX_PAYLOAD - 1U];
     uint16_t payload_length = 0U;
     bool update_requested = false;
@@ -303,9 +264,17 @@ static bool CmdStrategy_Execute(const CmdFrame_t *request, CmdTxFrame_t *respons
                 if (request->payload_length != 0U) {
                     status = CMD_STATUS_INVALID_LENGTH;
                 } else {
-                    Sys_Get_AdcCalibration(&calibration);
-                    CmdStrategy_WriteCalibrationPayload(payload, &calibration);
-                    payload_length = 24U;
+                    calibration_status = Sys_Get_CalibrationLoadStatus();
+                    if (calibration_status != EEPROM_LOAD_OK
+                        && calibration_status != EEPROM_LOAD_MIGRATED
+                        && calibration_status != EEPROM_LOAD_RECOVERED) {
+                        status = CMD_STATUS_EEPROM_ERROR;
+                    } else {
+                        ADC_Calibration_t calibration;
+                        Sys_Get_AdcCalibration(&calibration);
+                        CmdStrategy_WriteCalibrationPayload(payload, &calibration);
+                        payload_length = 24U;
+                    }
                 }
                 break;
 
@@ -333,18 +302,9 @@ static bool CmdStrategy_Execute(const CmdFrame_t *request, CmdTxFrame_t *respons
                 break;
 
             case CMD_CAL_SET:
-                if (request->payload_length != 24U) {
-                    status = CMD_STATUS_INVALID_LENGTH;
-                } else {
-                    Sys_Get_AdcCalibration(&calibration);
-                    CmdStrategy_ReadCalibrationPayload(&calibration, request->payload);
-                    status = CmdStrategy_SaveCalibration(&calibration);
-                    if (status == CMD_STATUS_OK) {
-                        Sys_Get_AdcCalibration(&calibration);
-                        CmdStrategy_WriteCalibrationPayload(payload, &calibration);
-                        payload_length = 24U;
-                    }
-                }
+                status = request->payload_length == 24U
+                    ? CMD_STATUS_READ_ONLY
+                    : CMD_STATUS_INVALID_LENGTH;
                 break;
 
             case CMD_CAL_RESET:
@@ -354,13 +314,7 @@ static bool CmdStrategy_Execute(const CmdFrame_t *request, CmdTxFrame_t *respons
                            || request->payload[1] != 0x3CU) {
                     status = CMD_STATUS_INVALID_PARAMETER;
                 } else {
-                    ADC_Calibration_SetDefault(&calibration);
-                    status = CmdStrategy_SaveCalibration(&calibration);
-                    if (status == CMD_STATUS_OK) {
-                        Sys_Get_AdcCalibration(&calibration);
-                        CmdStrategy_WriteCalibrationPayload(payload, &calibration);
-                        payload_length = 24U;
-                    }
+                    status = CMD_STATUS_READ_ONLY;
                 }
                 break;
 
@@ -370,8 +324,10 @@ static bool CmdStrategy_Execute(const CmdFrame_t *request, CmdTxFrame_t *respons
                 } else if (request->payload[0] != 0xC3U
                            || request->payload[1] != 0x3CU) {
                     status = CMD_STATUS_INVALID_PARAMETER;
-                } else {
+                } else if (EEPROM_UpdateCommand_Write(true)) {
                     update_requested = true;
+                } else {
+                    status = CMD_STATUS_EEPROM_ERROR;
                 }
                 break;
 
@@ -410,7 +366,6 @@ static bool CmdStrategy_QueueResponse(const CmdTxFrame_t *response)
 
 static void CmdStrategy_EnterFirmwareUpdate(void)
 {
-    EEPROM_UpdateCommand_Write(true);
     HAL_Delay(100U);
     USER_USB_DEVICE_DeInit();
     HAL_Delay(500U);

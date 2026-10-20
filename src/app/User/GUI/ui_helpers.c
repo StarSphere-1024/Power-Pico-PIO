@@ -117,8 +117,8 @@ void ui_clear_data_monitor(void) {
 }
 
 //////////////// sys save functions ///////////////
-void ui_system_settings_save(void) {
-    EEPROM_SysSetting_Save();
+bool ui_system_settings_save(void) {
+    return EEPROM_SysSetting_Save();
 }
 
 ///////////// interface for com with PD UFP Task //////////////

@@ -48,10 +48,8 @@ void HardwareInitTask(void *argument)
     Gate_Port_Init();
     flow_route_selection(HIGH_CUR);
 
-    // system settings and calibration must be ready before sampling starts
-    if(!EEPROM_Init_Check()) {
-      EEPROM_SysSetting_Get();
-    }
+    // System settings load owns the boot marker check and loads both domains.
+    EEPROM_SysSetting_Get();
     Gate_Set_Mode(Sys_Get_CurrentRangeMode());
 
     // usb init
